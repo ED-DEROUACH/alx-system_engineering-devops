@@ -1,11 +1,5 @@
 #!/bin/bash
-
-# Get the values of BREATH and LOVE environment variables
 breath=$BREATH
 love=$LOVE
-
-# Calculate the result of LOVE to the power BREATH
 result=$(echo "$love^$breath" | bc)
-
-# Display the result followed by a new line
 echo $result
