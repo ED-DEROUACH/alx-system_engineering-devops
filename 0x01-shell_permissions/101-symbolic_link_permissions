@@ -1,2 +1,4 @@
 #!/bin/bash
-chown -h vincent:staff_hello
+
+# change owner and group owner of _hello symbolic link
+sudo chown -h vincent:_hello /path/to/_hello
