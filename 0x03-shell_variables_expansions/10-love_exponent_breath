@@ -1,5 +1,2 @@
-#!/bin/bash
-breath=$BREATH
-love=$LOVE
-result=$(echo "$love^$breath" | bc)
-echo $result
+#!bin/bach
+echo $(($BREATH ** $LOVE))
