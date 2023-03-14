@@ -1,2 +1,2 @@
 #!/bin/bash
-printf '%o\n' $(( $((5#$(echo $STIR | tr 'stir.' '01234'))) + $((5#$(echo $WATER | tr 'water' '01234'))) )) | tr '01234567' 'behlnort'
+echo $(printf '%d\n' "'$WATER" "'$STIR" | awk '{s+=$1} END {print s}' | awk '{for(i=1;i<=length($0);i++){printf("%c",97+substr($0,i,1))}}')
