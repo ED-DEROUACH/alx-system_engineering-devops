@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $(printf '%d\n' "'$WATER" "'$STIR" | awk '{s+=$1} END {print s}' | awk '{for(i=1;i<=length($0);i++){printf("%c",97+substr($0,i,1))}}')
+echo $(printf "%s" "$WATER" "$STIR" | tr 'waterstir' '01234567' | bc | tr '01234567' 'bestchol')
