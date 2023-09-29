@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# This script tells the story of users in /etc/passwd
+
+# Set the IFS to colon (:) to separate fields
+IFS=":"
+
+# Read and process each line in /etc/passwd
+while read -r username _ uid _ home shell; do
+  # Get additional user information
+  user_info=$(getent passwd "$username")
+
+  # Extract user's group ID
+  group_id=$(echo "$user_info" | cut -d: -f4)
+
+  # Extract user's password
+  password=$(echo "$user_info" | cut -d: -f2)
+
+  # Extract user's information (full name)
+  user_info=$(echo "$user_info" | cut -d: -f5)
+
+  # Print the user's story
+  echo "The user $username is part of the $group_id gang, lives in $home and rides $shell. $uid's place is protected by the passcode $password, more info about the user here: $user_info"
+done < /etc/passwd
