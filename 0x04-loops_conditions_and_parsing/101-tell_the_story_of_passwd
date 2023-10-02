@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
-# This script tells the story of users in /etc/passwd
+# Read:
+#	IFS (internal field separator)
+#	Understanding /etc/passwd
+#The file /etc/passwd has already been covered in a previous
+#project and you should be familiar with it. Today we will make up a story based on it.
+#Write a Bash script that displays the content of the file /etc/passwd,
+#using the while loop + IFS.
+#Format: The user USERNAME is part of the GROUP_ID gang,
+#lives in HOME_DIRECTORY and rides COMMAND/SHELL. USER ID's
+#place is protected by the passcode PASSWORD,
+#more info about the user here: USER ID INFO
 
-# Set the IFS to colon (:) to separate fields
-IFS=":"
-
-# Read and process each line in /etc/passwd
-while read -r username _ uid _ home shell; do
-  # Get additional user information
-  user_info=$(getent passwd "$username")
-
-  # Extract user's group ID
-  group_id=$(echo "$user_info" | cut -d: -f4)
-
-  # Extract user's password
-  password=$(echo "$user_info" | cut -d: -f2)
-
-  # Extract user's information (full name)
-  user_info=$(echo "$user_info" | cut -d: -f5)
-
-  # Print the user's story
-  echo "The user $username is part of the $group_id gang, lives in $home and rides $shell. $uid's place is protected by the passcode $password, more info about the user here: $user_info"
-done < /etc/passwd
+input="/etc/passwd"
+while IFS= read -r line
+do
+  username=$(echo "$line" | cut -d: -f 1)
+  group_id=$(echo "$line" | cut -d: -f 4)
+  home_directory=$(echo "$line" | cut -d: -f 6)
+  command=$(echo "$line" | cut -d: -f 7)
+  user_id=$(echo "$line" | cut -d: -f 3)
+  password=$(echo "$line" | cut -d: -f 2)
+  user_id_info=$(echo "$line" | cut -d: -f 5)
+  echo "The user $username is part of the $group_id gang, lives in $home_directory and rides $command. $user_id's place is protected by the passcode $password, more info about the user here: $user_id_info"
+done < "$input"
