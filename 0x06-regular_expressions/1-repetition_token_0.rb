@@ -6,19 +6,17 @@ if ARGV.length != 1
   exit 1
 end
 
+# Store the provided argument in a variable
 text_to_search = ARGV[0]
 
-# Define the regular expression pattern to match the provided cases
-pattern = /hb{0,1}tn/
+# Define a regular expression pattern
+pattern = /hbt{2,5}n/
 
-# Use the pattern to find matches in the input text
+# Use the scan method to find all matches in the input text
 matches = text_to_search.scan(pattern)
 
-# Print the matches (if any)
-if !matches.empty?
-  matches.each do |match|
-    puts match
-  end
-else
-  puts ""
-end
+# Join the matched substrings into a single string
+matches_string = matches.join
+
+# Print the result (matches_string)
+puts matches_string
