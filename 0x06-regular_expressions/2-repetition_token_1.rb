@@ -9,7 +9,7 @@ end
 text_to_search = ARGV[0]
 
 # Define the regular expression pattern to match the provided cases
-pattern = /hbt{2,5}n/
+pattern = /hb?tn/
 
 # Use the pattern to find matches in the input text
 matches = text_to_search.scan(pattern)
@@ -21,5 +21,4 @@ if !matches.empty?
   end
 else
   puts ""
-end
-
+en
