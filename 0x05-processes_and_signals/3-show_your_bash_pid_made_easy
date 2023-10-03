@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
-#display pid of a bash
+# Display the number of bash processes
 
-pgrep "bash"
+# Use pgrep to find the PIDs of processes containing the word "bash"
+pids=$(pgrep "bash")
+
+# Count the number of PIDs and display it
+count=$(echo "$pids" | wc -w)
+echo "$count"
