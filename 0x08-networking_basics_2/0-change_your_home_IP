@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if the script is run as root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Please run this script as root or using sudo."
+    exit 1
+fi
+
+# Update the hosts file to change IP address mappings
+echo "Changing the IP address mappings in the hosts file..."
+echo "127.0.0.2 localhost" | sudo tee /etc/hosts
+echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts
+
+# Flush DNS cache to apply changes immediately
+echo "Flushing DNS cache..."
+if command -v systemd-resolve &> /dev/null; then
+    sudo systemd-resolve --flush-caches
+else
+    sudo service nscd restart
+fi
+
+echo "IP address mappings have been updated:"
+echo "localhost now resolves to 127.0.0.2"
+echo "facebook.com now resolves to 8.8.8.8"
+
