@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo "Active Internet connections (only servers)"
+echo "Proto Local Address           PID/Program name"
+
+# List listening TCP ports and associated programs
+lsof -i -n -P | grep "(LISTEN)" | awk '{print $1, $9, $2}' | while read line; do
+    proto=$(echo $line | awk '{print $1}')
+    local_address=$(echo $line | awk '{print $2}')
+    pid=$(echo $line | awk '{print $3}')
+    echo "tcp $local_address $pid"
+done
+
+# List listening UDP ports and associated programs
+lsof -i -n -P | grep "UDP" | grep "(LISTEN)" | awk '{print $1, $9, $2}' | while read line; do
+    proto=$(echo $line | awk '{print $1}')
+    local_address=$(echo $line | awk '{print $2}')
+    pid=$(echo $line | awk '{print $3}')
+    echo "udp $local_address $pid"
+done
+
