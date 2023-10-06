@@ -1,18 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Ce script effectue un ping 5 fois vers une adresse IP fournie en argument sur le terminal.
 
-# La première ligne spécifie l'interpréteur de commandes (bash) qui exécutera le script.
-
-# La ligne suivante est un commentaire explicatif, indiqué par le caractère dièse (#), qui explique le but du script.
-
-# Le script commence par vérifier si un argument (adresse IP) a été fourni lors de l'exécution du script.
-
+# Vérifie si un argument (adresse IP) a été fourni lors de l'exécution du script.
 if [[ $1 == "" ]]; then
-	# Si aucun argument n'a été fourni, le script affiche un message d'utilisation indiquant comment utiliser le script.
-	echo "Usage: 5-is_the_host_on_the_network {IP_ADDRESS}"
-else
-	# Si un argument a été fourni, le script utilise la commande ping pour envoyer 5 paquets ICMP (ping) à l'adresse IP spécifiée.
-	# L'option -c 5 indique à ping d'envoyer 5 paquets.
-	ping "$1" -c 5;
+    # Si aucun argument n'a été fourni, le script affiche un message d'utilisation indiquant comment utiliser le script.
+    echo "Usage: $0 {IP_ADDRESS}"
+    # $0 représente le nom du script lui-même.
+
+    # Exit avec un code d'erreur pour indiquer que le script n'a pas réussi.
+    exit 1
 fi
+
+# Si un argument a été fourni, le script utilise la commande ping pour envoyer 5 paquets ICMP (ping) à l'adresse IP spécifiée.
+# L'option -c 5 indique à ping d'envoyer 5 paquets.
+ping "$1" -c 5
