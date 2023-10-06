@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if netcat (nc) is installed
 if ! command -v nc &>/dev/null; then
