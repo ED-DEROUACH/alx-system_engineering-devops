@@ -1,0 +1,55 @@
+              User
+               |
+               v
+       DNS (8.8.8.8)
+               |
+               v
+       +--------------+
+       | Load Balancer|
+       +--------------+
+       /     |     \
+      /      |      \
+     /       |       \
+   Nginx   Nginx     Nginx
+     |       |        |
+     v       v        v
+Application Server  Application Server
+     |                   |
+     v                   v
+    MySQL               MySQL
+     |                   |
+     v                   v
+    Firewalls         Firewalls
+     |                   |
+     v                   v
+    SSL Certificate     SSL Certificate
+     |                   |
+     v                   v
+  Monitoring Clients   Monitoring Clients
+Here's what each component represents:
+
+User: This represents the user who wants to access the website.
+
+DNS (8.8.8.8): The DNS server resolves the domain name (www.foobar.com) to the IP address of the Load Balancer.
+
+Load Balancer (HAProxy): The load balancer distributes incoming traffic evenly among the web servers (Nginx) to achieve load balancing and high availability.
+
+Nginx: These are the web servers responsible for serving static files and handling incoming HTTP requests. They also terminate SSL connections.
+
+Application Server: This server runs your application code and handles dynamic content.
+
+MySQL: The database server stores and manages data, such as user accounts and other dynamic information.
+
+Firewalls (x3): These represent the firewalls added for network security. They control incoming and outgoing traffic and protect against threats.
+
+SSL Certificate: This is used to enable HTTPS, ensuring encrypted traffic between users and the web servers.
+
+Monitoring Clients: These clients collect data and logs to monitor the infrastructure's performance and security.
+
+This architecture provides redundancy, security, encryption, and monitoring for a robust web infrastructure. Ensure that you label each component and add arrows to indicate the flow of requests and data.
+
+
+
+
+
+

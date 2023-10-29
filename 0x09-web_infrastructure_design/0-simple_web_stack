@@ -1,0 +1,28 @@
+   User
+    |
+    v
+   DNS
+    |
+    v
+Server (8.8.8.8)
+    |
+    v
+  Nginx
+    |
+    v
+Application
+  Server
+    |
+    v
+  MySQL
+User: This represents the user who wants to access your website.
+
+DNS: This is where the DNS resolution takes place. A line should connect "User" to "Server (8.8.8.8)" with an arrow, indicating the DNS request flow.
+
+Server (8.8.8.8): This is the server hosting your web infrastructure, with the IP address 8.8.8.8. The line from DNS to the server represents the DNS resolution, and from the server, there should be an arrow to the next component.
+
+Nginx: This represents the web server (Nginx) that handles incoming HTTP requests. An arrow should go from "Server (8.8.8.8)" to "Nginx."
+
+Application Server: This box should be connected to Nginx, indicating that Nginx forwards requests to the application server. You can label this box with "Your Codebase" to represent your application code.
+
+MySQL: This box should be connected to the application server, showing that it's the database used by the application to store and retrieve data.

@@ -1,0 +1,24 @@
+                User
+                 |
+                 v
+       +------------------+
+       |   HAProxy (1)   |
+       +------------------+
+         /           \
+        /             \
+       v               v
+  +---------+    +---------+
+  | Web     |    | App     |
+  | Server  |    | Server  |
+  +---------+    +---------+
+Here's what each component represents:
+
+User: This represents the user who wants to access the website.
+
+HAProxy (1): The HAProxy load balancer is configured as a cluster with another HAProxy for high availability. It distributes incoming traffic between the web server and the application server.
+
+Web Server: This server primarily handles HTTP requests and serves static files.
+
+Application Server: This server runs the application code and handles dynamic content and business logic.
+
+This diagram illustrates the separation of the web server and application server, both managed by the HAProxy load balancer for load distribution and high availability. Users' requests are directed to either the web server or the application server based on the load balancer's configuration.
