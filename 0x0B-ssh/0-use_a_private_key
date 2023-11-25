@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Connect to the server using the private key ~/.ssh/school and the user ubuntu
+ssh -i ~/.ssh/school ubuntu@34.201.161.66
+
+# Exit the remote session
+exit
+
