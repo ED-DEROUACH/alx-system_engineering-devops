@@ -1,2 +1,11 @@
 #!/usr/bin/env bash
-sudo service apache2 start
+
+# Start Apache directly (adjust the path based on your system)
+/usr/sbin/apache2ctl start
+
+# Check if Apache is running
+if pgrep -x apache2 >/dev/null; then
+    echo "Apache2 is running"
+else
+    echo "Apache2 failed to start"
+fi
