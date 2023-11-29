@@ -1,50 +1,8 @@
 #!/usr/bin/env bash
-
-# Update package list and install nginx
+# Setup nginx server
 apt-get update
 apt-get -y install nginx
-
-# Check if Nginx installation was successful
-if [ $? -ne 0 ]; then
-    echo "Nginx installation failed. Exiting."
-    exit 1
-fi
-
-# Allow HTTP traffic through UFW
 ufw allow 'Nginx HTTP'
-
-# Remove overly permissive permissions
-chmod 755 /var/www/html
-
-# Create a simple "Hello World!" index.html file
+chmod 777 -R /var/www/html/
 echo "Hello World!" > /var/www/html/index.html
-
-# Restart Nginx to apply changes
-service nginx restart
-
-# Check if Nginx restart was successful
-if [ $? -ne 0 ]; then
-    echo "Nginx restart failed. Please check the configuration and logs."
-    exit 1
-fi
-
-# Verify Nginx is running on port 80
-if ! lsof -i :80; then
-    echo "Nginx is not running on port 80. Please check the configuration and logs."
-    exit 1
-fi
-
-# Verify Nginx returns 200 for /
-if ! curl -s -o /dev/null -w "%{http_code}" http://localhost/ | grep -q 200; then
-    echo "Nginx did not return a 200 status code for /. Please check the configuration and logs."
-    exit 1
-fi
-
-# Verify Nginx returns "Hello World!" for /
-if ! curl -s http://localhost/ | grep -q "Hello World!"; then
-    echo "Nginx did not return the expected 'Hello World!' content for /. Please check the configuration and logs."
-    exit 1
-fi
-
-echo "Nginx setup completed successfully."
-
+service nginx start
