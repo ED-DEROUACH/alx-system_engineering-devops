@@ -14,5 +14,5 @@ frontend app
         default_backend web-backend
 backend web-backend
         balance roundrobin
-        server 375607-web-01 34.201.161.66:80 check
-        server 375607-web-02 54.165.80.19:80 check
+        server 375607-web-01 34.201.161.66:443 check
+        server 375607-web-02 54.165.80.19:443 check
