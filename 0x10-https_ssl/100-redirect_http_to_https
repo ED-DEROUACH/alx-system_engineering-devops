@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Configure HAProxy to redirect HTTP traffic to HTTPS
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg
 global
     log /dev/log    local0
     stats socket /run/haproxy/admin.sock mode 660 level admin
@@ -12,7 +16,7 @@ defaults
 
 frontend th3gr00t-tech-frontend
     bind *:80
-    bind *:443 ssl crt /etc/haproxy/certs/th3gr00t.tech.pem
+    bind *:443 ssl crt /etc/letsencrypt/live/www.$domain/fullchain.pem
     http-request redirect scheme https code 301 if !{ ssl_fc }
     http-request set-header X-Forwarded-Proto https
     default_backend th3gr00t-tech-backend
@@ -21,4 +25,8 @@ backend th3gr00t-tech-backend
     balance roundrobin
     server 375607-web-01 34.201.161.66:80 check
     server 375607-web-02 54.165.80.19:80 check
+EOF
+
+# Restart HAProxy
+sudo service haproxy restart
 
