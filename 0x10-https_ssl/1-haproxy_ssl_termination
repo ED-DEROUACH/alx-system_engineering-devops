@@ -1,18 +1,22 @@
 global
-        #pass
+    # Pass
+
 defaults
-        mode    http
-        option httpclose
-        timeout connect 5000ms
-        timeout client  5000ms
-        timeout server  5000ms
+    mode http
+    option httpclose
+    timeout connect 5000ms
+    timeout client  5000ms
+    timeout server  5000ms
+
 frontend app
-        bind *:80
-        bind *:443 ssl crt /etc/haproxy/certs/coinepython.tech.pem
-        redirect scheme https if !{ ssl_fc }
-        stats uri /haproxy?stats
-        default_backend web-backend
+    bind *:80
+    bind *:443 ssl crt /etc/haproxy/certs/coinepython.tech.pem
+    redirect scheme https if !{ ssl_fc }
+    stats uri /haproxy?stats
+    default_backend web-backend
+
 backend web-backend
-        balance roundrobin
-        server 375607-web-01 34.201.161.66:443 check
-        server 375607-web-02 54.165.80.19:443 check
+    balance roundrobin
+    server 375607-web-01 34.201.161.66:443 check
+    server 375607-web-02 54.165.80.19:443 check
+
