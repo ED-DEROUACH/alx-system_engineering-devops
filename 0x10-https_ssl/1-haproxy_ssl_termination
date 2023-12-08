@@ -1,22 +1,40 @@
+#!/bin/bash
+
+# Install HAProxy 1.5 or higher and certbot if not already installed
+# sudo apt-get install haproxy certbot
+
+domain="yourdomain.com"  # Replace with your actual domain
+
+# Generate SSL certificate using certbot
+sudo certbot certonly --standalone -d www.$domain
+
+# Configure HAProxy for SSL termination
+cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg
 global
-    # Pass
+    log /dev/log    local0
+    stats socket /run/haproxy/admin.sock mode 660 level admin
 
 defaults
-    mode http
-    option httpclose
-    timeout connect 5000ms
-    timeout client  5000ms
-    timeout server  5000ms
+    log     global
+    mode    http
+    option  httplog
+    timeout connect  10s
+    timeout client  30s
+    timeout server  30s
 
-frontend app
+frontend th3gr00t-tech-frontend
     bind *:80
-    bind *:443 ssl crt /etc/haproxy/certs/coinepython.tech.pem
-    redirect scheme https if !{ ssl_fc }
-    stats uri /haproxy?stats
-    default_backend web-backend
+    bind *:443 ssl crt /etc/letsencrypt/live/www.$domain/fullchain.pem
+    http-request redirect scheme https code 301 if !{ ssl_fc }
+    http-request set-header X-Forwarded-Proto https
+    default_backend th3gr00t-tech-backend
 
-backend web-backend
+backend th3gr00t-tech-backend
     balance roundrobin
-    server 375607-web-01 34.201.161.66:443 check
-    server 375607-web-02 54.165.80.19:443 check
+    server 375607-web-01 34.201.161.66:80 check
+    server 375607-web-02 54.165.80.19:80 check
+EOF
+
+# Restart HAProxy
+sudo service haproxy restart
 
