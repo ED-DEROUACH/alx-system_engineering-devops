@@ -1,8 +1,27 @@
-sudo apt-get install ufw -y
+#!/bin/bash
+
+# Update package list
+sudo apt-get update
+
+# Install ufw (Uncomplicated Firewall)
+sudo apt-get install -y ufw
+
+# Set default policies to deny incoming and allow outgoing
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
+
+# Allow SSH (port 22)
 sudo ufw allow 22/tcp
+
+# Allow HTTPS (port 443)
 sudo ufw allow 443/tcp
+
+# Allow HTTP (port 80)
 sudo ufw allow 80/tcp
-sudo ufw enable -y
+
+# Enable the firewall
+sudo ufw enable
+
+# Display the status to verify the rules
 sudo ufw status
+
