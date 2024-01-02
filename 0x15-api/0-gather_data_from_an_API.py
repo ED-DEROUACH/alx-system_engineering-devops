@@ -1,21 +1,25 @@
 #!/usr/bin/python3
-"""getting data from an api
-"""
+""" fetch data from api and display it """
 
 import requests
-from sys import argv
+import sys
 
-if __name__ == '__main__':
-    endpoint = "https://jsonplaceholder.typicode.com"
-    userId = argv[1]
-    user = requests.get(endpoint + "users/{}".
-                        format(userId), verify=False).json()
-    todo = requests.get(endpoint + "todos?userId={}".
-                        format(userId), verify=False).json()
-    completed_tasks = []
-    for task in todo:
-        if task.get('completed') is True:
-            completed_tasks.append(task.get('title'))
+
+if __name__ == "__main__":
+    api_todos = "https://jsonplaceholder.typicode.com/users/"\
+                + sys.argv[1] + "/todos"
+    api_user = "https://jsonplaceholder.typicode.com/users/"\
+               + sys.argv[1]
+    tasks_done = 0
+    r1 = requests.get(api_todos)
+    r2 = requests.get(api_user)
+    for task in r1.json():
+        if task.get("completed") is True:
+            tasks_done += 1
     print("Employee {} is done with tasks({}/{}):".
-          format(user.get('name'), len(completed_tasks), len(todo)))
-    print("\n".join("\t {}".format(task) for task in completed_tasks))
+          format(r2.json().get("name"),
+                 tasks_done,
+                 len(r1.json())))
+    for task in r1.json():
+        if task.get("completed") is True:
+            print("\t {}".format(task.get("title")))
